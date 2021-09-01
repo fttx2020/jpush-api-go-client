@@ -35,7 +35,7 @@ type AndroidNotice struct {
 		SDK＜422的版本此字段值仅对走华硕通道和极光自有通道下发生效，不影响请求走其它厂商通道。
 		SDK≥422的版本，API推送时建议填写intent字段（intent:#Intent;component=您的包名/Activity全名;end），否则点击通知可能无跳转动作。
 	*/
-	Intent AndroidIntent `json:"intent,omitempty"`
+	Intent *AndroidIntent `json:"intent,omitempty"`
 	/*
 		该字段用于指定开发者想要打开的 activity，值为 activity 节点的 “android:name”属性值;
 		适配华为、小米、vivo厂商通道跳转；
