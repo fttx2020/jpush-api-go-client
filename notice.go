@@ -37,6 +37,18 @@ type AndroidNotice struct {
 	*/
 	Intent AndroidIntent `json:"intent,omitempty"`
 	/*
+		该字段用于指定开发者想要打开的 activity，值为 activity 节点的 “android:name”属性值;
+		适配华为、小米、vivo厂商通道跳转；
+		Jpush SDK≥V4.2.2，可不再填写本字段，仅设置intent字段即可
+	*/
+	UriActivity string `json:"uri_activity,omitempty"`
+	/*
+		该字段用于指定开发者想要打开的 activity，值为 "activity"-"intent-filter"-"action" 节点的 "android:name" 属性值;
+		适配 oppo、fcm跳转；
+		Jpush SDK≥V4.2.2，可不再填写本字段，仅设置intent字段即可，但若需兼容旧版SDK必须填写该字段
+	*/
+	UriAction string `json:"uri_action,omitempty"`
+	/*
 		值为 "1" 时，APP 在前台会弹出通知栏消息；
 		值为 "0" 时，APP 在前台不会弹出通知栏消息。
 		注：默认情况下 APP 在前台会弹出通知栏消息。
