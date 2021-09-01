@@ -6,23 +6,23 @@ import (
 )
 
 type Schedule struct {
-	Cid		string				   `json:"cid"`
+	Cid     string                 `json:"cid"`
 	Name    string                 `json:"name"`
 	Enabled bool                   `json:"enabled"`
 	Trigger map[string]interface{} `json:"trigger"`
 	Push    *PayLoad               `json:"push"`
 }
 
-func NewSchedule(name,cid string, enabled bool, push *PayLoad) *Schedule {
+func NewSchedule(name, cid string, enabled bool, push *PayLoad) *Schedule {
 	return &Schedule{
-		Cid:	cid,
+		Cid:     cid,
 		Name:    name,
 		Enabled: enabled,
 		Push:    push,
 	}
 }
-func (s *Schedule) SingleTrigger(t time.Time) {
-	s.Trigger = map[string]interface{}{
+func (schedule *Schedule) SingleTrigger(t time.Time) {
+	schedule.Trigger = map[string]interface{}{
 		"single": map[string]interface{}{
 			"time": t.Format("2006-01-02 15:04:05"),
 		},
@@ -30,8 +30,8 @@ func (s *Schedule) SingleTrigger(t time.Time) {
 
 }
 
-func (s *Schedule) PeriodicalTrigger(start time.Time, end time.Time, time time.Time, timeUnit string, frequency int, point []string) {
-	s.Trigger = map[string]interface{}{
+func (schedule *Schedule) PeriodicalTrigger(start time.Time, end time.Time, time time.Time, timeUnit string, frequency int, point []string) {
+	schedule.Trigger = map[string]interface{}{
 		"periodical": map[string]interface{}{
 			"start":     start.Format("2006-01-02 15:04:05"),
 			"end":       end.Format("2006-01-02 15:04:05"),
@@ -42,8 +42,8 @@ func (s *Schedule) PeriodicalTrigger(start time.Time, end time.Time, time time.T
 		},
 	}
 }
-func (this *Schedule) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (schedule *Schedule) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(schedule)
 	if err != nil {
 		return nil, err
 	}

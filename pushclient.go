@@ -32,29 +32,29 @@ func NewPushClient(secret, appKey string) *PushClient {
 	return pusher
 }
 
-func (this *PushClient) Send(data []byte) (string, error) {
-	return this.SendPushBytes(data)
+func (client *PushClient) Send(data []byte) (string, error) {
+	return client.SendPushBytes(data)
 }
-func (this *PushClient) CreateSchedule(data []byte) (string, error) {
-	// this.BaseUrl = HOST_SCHEDULE
-	return this.SendScheduleBytes(data, HOST_SCHEDULE)
+func (client *PushClient) CreateSchedule(data []byte) (string, error) {
+	// client.BaseUrl = HOST_SCHEDULE
+	return client.SendScheduleBytes(data, HOST_SCHEDULE)
 }
-func (this *PushClient) DeleteSchedule(id string) (string, error) {
-	// this.BaseUrl = HOST_SCHEDULE
-	return this.SendDeleteScheduleRequest(id, HOST_SCHEDULE)
+func (client *PushClient) DeleteSchedule(id string) (string, error) {
+	// client.BaseUrl = HOST_SCHEDULE
+	return client.SendDeleteScheduleRequest(id, HOST_SCHEDULE)
 }
-func (this *PushClient) GetSchedule(id string) (string, error) {
+func (client *PushClient) GetSchedule(id string) (string, error) {
 	// GET https://api.jpush.cn/v3/schedules/{schedule_id}
-	// this.BaseUrl = HOST_SCHEDULE
-	return this.SendGetScheduleRequest(id, HOST_SCHEDULE)
+	// client.BaseUrl = HOST_SCHEDULE
+	return client.SendGetScheduleRequest(id, HOST_SCHEDULE)
 
 }
-func (this *PushClient) GetReport(msg_ids string) (string, error) {
-	// this.BaseUrl = HOST_REPORT
-	return this.SendGetReportRequest(msg_ids, HOST_REPORT)
+func (client *PushClient) GetReport(msg_ids string) (string, error) {
+	// client.BaseUrl = HOST_REPORT
+	return client.SendGetReportRequest(msg_ids, HOST_REPORT)
 }
-func (this *PushClient) SendPushString(content string) (string, error) {
-	ret, err := SendPostString(this.BaseUrl, content, this.AuthCode)
+func (client *PushClient) SendPushString(content string) (string, error) {
+	ret, err := SendPostString(client.BaseUrl, content, client.AuthCode)
 	if err != nil {
 		return ret, err
 	}
@@ -65,9 +65,9 @@ func (this *PushClient) SendPushString(content string) (string, error) {
 	}
 }
 
-func (this *PushClient) SendPushBytes(content []byte) (string, error) {
-	//ret, err := SendPostBytes(this.BaseUrl, content, this.AuthCode)
-	ret, err := SendPostBytes2(this.BaseUrl, content, this.AuthCode)
+func (client *PushClient) SendPushBytes(content []byte) (string, error) {
+	//ret, err := SendPostBytes(client.BaseUrl, content, client.AuthCode)
+	ret, err := SendPostBytes2(client.BaseUrl, content, client.AuthCode)
 	if err != nil {
 		return ret, err
 	}
@@ -78,8 +78,8 @@ func (this *PushClient) SendPushBytes(content []byte) (string, error) {
 	}
 }
 
-func (this *PushClient) SendScheduleBytes(content []byte, url string) (string, error) {
-	ret, err := SendPostBytes2(url, content, this.AuthCode)
+func (client *PushClient) SendScheduleBytes(content []byte, url string) (string, error) {
+	ret, err := SendPostBytes2(url, content, client.AuthCode)
 	if err != nil {
 		return ret, err
 	}
@@ -91,8 +91,8 @@ func (this *PushClient) SendScheduleBytes(content []byte, url string) (string, e
 
 }
 
-func (this *PushClient) SendGetReportRequest(msg_ids string, url string) (string, error) {
-	return Get(url).SetBasicAuth(this.AppKey, this.MasterSecret).Param("msg_ids", msg_ids).String()
+func (client *PushClient) SendGetReportRequest(msg_ids string, url string) (string, error) {
+	return Get(url).SetBasicAuth(client.AppKey, client.MasterSecret).Param("msg_ids", msg_ids).String()
 }
 
 func UnmarshalResponse(rsp string) (map[string]interface{}, error) {
@@ -110,8 +110,8 @@ func UnmarshalResponse(rsp string) (map[string]interface{}, error) {
 	return mapRs, nil
 }
 
-func (this *PushClient) SendDeleteScheduleRequest(schedule_id string, url string) (string, error) {
-	rsp, err := Delete(strings.Join([]string{url, schedule_id}, "/")).Header("Authorization", this.AuthCode).String()
+func (client *PushClient) SendDeleteScheduleRequest(scheduleId string, url string) (string, error) {
+	rsp, err := Delete(strings.Join([]string{url, scheduleId}, "/")).Header("Authorization", client.AuthCode).String()
 	if err != nil {
 		return "", err
 	}
@@ -121,8 +121,8 @@ func (this *PushClient) SendDeleteScheduleRequest(schedule_id string, url string
 	}
 	return rsp, nil
 }
-func (this *PushClient) SendGetScheduleRequest(schedule_id string, url string) (string, error) {
-	rsp, err := Get(strings.Join([]string{url, schedule_id}, "/")).Header("Authorization", this.AuthCode).String()
+func (client *PushClient) SendGetScheduleRequest(scheduleId string, url string) (string, error) {
+	rsp, err := Get(strings.Join([]string{url, scheduleId}, "/")).Header("Authorization", client.AuthCode).String()
 	if err != nil {
 		return "", err
 	}
