@@ -6,7 +6,10 @@ type Notice struct {
 	IOS      *IOSNotice      `json:"ios,omitempty"`
 	WINPhone *WinPhoneNotice `json:"winphone,omitempty"`
 }
-
+type AndroidIntent struct {
+	//"url": "intent:#Intent;component=com.jiguang.push/com.example.jpushdemo.SettingActivity;end"
+	Url string `json:"url,omitempty"`
+}
 type AndroidNotice struct {
 	Alert string `json:"alert"`
 	Title string `json:"title,omitempty"`
@@ -32,7 +35,7 @@ type AndroidNotice struct {
 		SDK＜422的版本此字段值仅对走华硕通道和极光自有通道下发生效，不影响请求走其它厂商通道。
 		SDK≥422的版本，API推送时建议填写intent字段（intent:#Intent;component=您的包名/Activity全名;end），否则点击通知可能无跳转动作。
 	*/
-	Intent string `json:"intent,omitempty"`
+	Intent AndroidIntent `json:"intent,omitempty"`
 	/*
 		值为 "1" 时，APP 在前台会弹出通知栏消息；
 		值为 "0" 时，APP 在前台不会弹出通知栏消息。
