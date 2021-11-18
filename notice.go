@@ -55,7 +55,7 @@ type AndroidNotice struct {
 		否则下一条通知栏消息配置的badge_add_num数据会和之前角标数量进行增加； 建议badge_add_num配置为1；
 		举例：badge_add_num配置1，应用之前角标数为2，发送此角标消息后，应用角标数显示为3。
 	*/
-	BadgeAddNum string `json:"badge_add_num,omitempty"`
+	BadgeAddNum int `json:"badge_add_num,omitempty"`
 	/*
 		值为 "1" 时，APP 在前台会弹出通知栏消息；
 		值为 "0" 时，APP 在前台不会弹出通知栏消息。
