@@ -49,10 +49,24 @@ type AndroidNotice struct {
 	*/
 	UriAction string `json:"uri_action,omitempty"`
 	/*
+		角标数字，取值范围1-99
+		此属性目前仅针对华为 EMUI 8.0 及以上、小米 MIUI 6 及以上设备生效；
+		此字段如果不填，表示不改变角标数字（小米设备由于系统控制，不论推送走极光通道下发还是厂商通道下发，即使不传递依旧是默认+1的效果。）；
+		否则下一条通知栏消息配置的badge_add_num数据会和之前角标数量进行增加； 建议badge_add_num配置为1；
+		举例：badge_add_num配置1，应用之前角标数为2，发送此角标消息后，应用角标数显示为3。
+	*/
+	BadgeAddNum string `json:"badge_add_num,omitempty"`
+	/*
 		值为 "1" 时，APP 在前台会弹出通知栏消息；
 		值为 "0" 时，APP 在前台不会弹出通知栏消息。
 		注：默认情况下 APP 在前台会弹出通知栏消息。
 	*/
+	/*
+		桌面图标对应的应用入口Activity类， 比如“com.test.badge.MainActivity”
+		配合badge_add_num使用，二者需要共存，缺少其一不可；
+		针对华为设备推送时生效（此值如果填写非主Activity类，走厂商推送以华为厂商限制逻辑为准；走极光通道下发，默认以APP的主Activity为准）
+	*/
+	BadgeClass        string                 `json:"badge_class,omitempty"`
 	DisplayForeground string                 `json:"display_foreground,omitempty"`
 	Extras            map[string]interface{} `json:"extras,omitempty"`
 }
