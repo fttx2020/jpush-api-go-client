@@ -185,6 +185,7 @@ type OppoChannel struct {
 "push_mode":0
 }*/
 type VivoChannel struct {
+	Category        string `json:"category,omitempty"`
 	Distribution    string `json:"distribution,omitempty"`
 	Classification  int    `json:"classification,omitempty"`
 	DistributionFcm string `json:"distribution_fcm,omitempty"`
